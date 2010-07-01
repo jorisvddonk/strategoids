@@ -1,0 +1,45 @@
+#This is a situation file for STRATEGOIDS
+#Everything starting with a # is a COMMENT
+#Commands (<SOMETHING> signifies datatype):
+#
+#newfaction <string:name> <double:r>,<double:g>,<double:b> <int:faction identifier> - creates a faction
+#spawnship <int:faction identifier> <string:ship type> <double:x>,<double:y> <double:rotation (degrees)> - creates a new ship
+#spawnship_random <int:faction identifier> <string:ship type> <double:x>,<double:y> <double:max distance from x/y> - creates a new ship at random coordinates
+#order_attackmove <double:x>,<double:y> - makes the last added ship attackmove coordinates x,y
+#FOR <int:numloops> - starts a FOR loop
+#ROF - ends (executes!) a FOR loop
+
+#SETSEED <long> - sets the seed of the RNG
+#FIXEDSEED - sets the seed depending on the contents of the file. If the file changes, the seed changes. If the file doesn't change, the seed remains the same.
+#   YOU PROBABLY WANT TO USE FIXEDSEED OR SETSEED!!!
+
+FIXEDSEED
+
+newfaction "Alliance of Free Stars" 1,1,1 0
+newfaction "Not an Alliance" 1,0,0 1
+newfaction "Hierarchy of Battle Thralls" 0,1,0 2
+newfaction "Random faction 9001" 0,0,1 3
+
+
+#spawnship 0 carrier 0,0 0
+FOR 50
+spawnship_random 0 gunship 500,0 100
+order_attackmove 0,0
+ROF
+#
+FOR 100
+spawnship_random 1 fighter 0,500 100
+order_attackmove 0,0
+ROF
+#
+FOR 10
+spawnship_random 2 missile_cruiser -500,0 100
+order_attackmove 0,0
+ROF
+#
+FOR 10
+spawnship_random 3 frigate 0,-500 100
+order_attackmove 0,0
+ROF
+
+spawnship_random 0 engineer 0,0 100

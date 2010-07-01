@@ -1,0 +1,227 @@
+#This is a shapefile for Strategoids.
+#Everything starting with a # is a COMMENT
+#Commands (<SOMETHING> signifies datatype):
+#
+#shape <string>- Starts a shape/ship/object
+#endshape - Ends a shape/ship/object
+#setsize <double> - Sets the size with which to multiply the lines.
+#setcolor <double>,<double>,<double> - set the color of the lines to draw next.
+#setalpha <double> - set the alpha of the lines to draw next.
+#v <double>,<double> - Plot a vertex. If you plot a vertex and then another, a line is drawn between those.
+#   Note that if you plot four vertexes, three adjoining lines will be created.
+#newline - Starts a new line.  
+#   If you plot two vertexes, then invoke a newline command, and then plot two more vertexes, a total of TWO lines will be created that are NOT adjoining.
+#turret <double>,<double> <double> - creates a new turret at x,y coordinates with fire rate
+#hitpoints <int> - set the hitpoints of the ship
+#thruster_force <double> - set thruster force
+#turn_rate <double> - set turn rate
+#fire_rate <double> - set fire rate (millisecond delay)
+#bullet_missile - fire missiles instead of lasers
+#iscarrier - this ship can carry other ships within its hull //should deprecate this later on into addcomponent carrier
+#setshipaicore <string> - sets the Ship AI Core. Keep in mind that the ship AI core names are all set by code. If none is set for a ship, it'll have the "default" core set.
+#
+#
+###### WEAPON CLASSES ##### (assume 'mediocre' if no mention of goodness)
+# Shell/Kinetic - basic current-world bullet. Employed in different weapons (chainguns, shotguns). Good against armor.
+# Laser - Instant-hit weapon. Average against shields and armor.
+# Beam - Instant-hit charging laser-like weapon. Good against shields. Needs to charge up. Excessive energy drain.
+# Explosive - Used in grenades and missiles. Good against armor, average against shields.
+#
+#
+#
+###### SHIP CLASSES DRAFT ######
+#
+# Fighter - Basic nonspecialized fast attack vehicle. No sideways thrusters. Uses momentum and speed as a primary defense. No armor, weak shields.
+# Interceptor - Very agile and quick. Has sideways thrusters. Mathes course with an enemy and then unleashes twin chainguns on the enemy. Will always try to stay 'behind' the enemy and should usually succeed. No armor (will get destroyed rather quickly) and no shields. Horrible against instant-hit weapons (lasers) and ships with turrets (since they want to stick to the ass of ships).
+# Frigate - [Beam / Flak / Grenade / Missile] ...
+# Bomber - ...
+# Carrier - ...
+
+
+
+#### NOTES ####
+#
+# Warships will pretty much always accelerate continuously on a voyage and then decelerate; 'civilian' style ships will mostly accelerate, coast, then decelerate.
+# Most 'capital ships' only have a forward engine, and have 'realistic' turning rather than the Star-Control styled turning.
+# Most 'capital ships' are bad at targetting moving targets, and rightly so. If they're on a follow or attack move on a moving target, they'll usually just get in range and fire.
+# 
+#
+#
+
+shape carrier
+setsize 3
+setcolor 1,1,1
+setalpha 1
+v 2,-1
+v 3,1
+v 5,2
+v 6,0
+v 4,-6
+v 2,-5
+v -2,-5
+v -4,-6
+v -6,0
+v -5,2
+v -3,1
+v -2,-1
+v -1,3
+v -2,4
+v -5,3
+v -7,4
+v -4,7
+v -1,8
+v 1,8
+v 4,7
+v 7,4
+v 5,3
+v 2,4
+v 1,3
+v 2,-1
+thruster_force 0.0005
+turn_rate 0.5
+turret 0,0 20
+iscarrier
+endshape
+
+shape gunship
+setsize 0.4
+setcolor 1,1,1
+setalpha 1
+v -1,3
+v 1,3
+v 4,-2
+v -4,-2
+v -1,3
+#thruster 0,0,-3,-90,0.8,10
+#thruster 1,0,1,90,0.8,10
+thruster_force 0.001
+turret 0,0 80
+endshape
+
+shape fighter
+setsize 0.2
+setcolor 1,1,1
+setalpha 1
+v -5,-5
+v 0,5
+v 5,-5
+v 1,-3
+v -1,-3
+v -5,-5
+thruster_force 0.002
+#thruster 0,1,-3,-90,0.8,10
+#thruster 0,-1,-3,-90,0.8,10
+##thruster 0,0,-3,-90,0.8,10
+##thruster 1,0,1,90,0.8,10
+#thruster 1,-2,1,110,0.8,10
+#thruster 1,2,1,70,0.8,10
+#thruster 2,1,3,0,0.8,10
+#thruster 3,-1,3,180,0.8,10
+endshape
+
+shape bomber
+setsize 0.5
+setcolor 1,1,1
+setalpha 1
+v -12,-3
+v -4,1
+v 0,2
+v 4,1
+v 12,-3
+v 0,-1
+v -12,-3
+endshape
+
+shape frigate
+setsize 0.8
+setcolor 1,1,1
+setalpha 1
+v 1,-9
+v 3,-8
+v 5,-6
+v 6,-4
+v 5,-2
+v 3,-1
+v 2,4
+v 3,7
+v 1,11
+v -1,11
+v -3,7
+v -2,4
+v -3,-1
+v -5,-2
+v -6,-4
+v -5,-6
+v -3,-8
+v -1,-9
+v 1,-9
+#thruster 0,0,-3,-90,0.8,10
+#thruster 1,0,1,90,0.8,10
+turret -3,-3 20
+turret 3,-3 20
+turn_rate 0.5
+thruster_force 0.0004
+hitpoints 100
+endshape
+
+shape engineer
+setsize 0.3
+setcolor 1,1,1
+setalpha 1
+v 0,5
+v 5,1
+v 1,0
+v 2,-2
+v 1,-2
+v 2,-3
+v 4,-2
+v 2,-4
+v 0,-3
+v -2,-4
+v -4,-2
+v -2,-3
+v -1,-2
+v -2,-2
+v -1,0
+v -5,1
+v 0,5
+addcomponent builder
+endshape
+
+shape missile_cruiser
+setsize 1
+setcolor 1,1,1
+setalpha 1
+v -1,5
+v -2,6
+v -1,10
+v 1,10
+v 2,6
+v 1,5
+v 2,-3
+v 3,-4
+v 4,-6
+v 2,-8
+v 1,-11
+v 0,-10
+v -1,-11
+v -2,-8
+v -4,-6
+v -3,-4
+v -2,-3
+v -1,5
+bullet_missile
+fire_rate 40
+#thruster 0,0,-3,-90,0.8,10
+#thruster 1,0,1,90,0.8,10
+#turret 0,-9 800
+#turret 0,-6 800
+#turret -2,-6 800
+#turret 2,-6 800
+#turret 0,-3 800
+#turret 0,0 800
+#turret 0,7 100
+turn_rate 0.3
+thruster_force 0.0003
+hitpoints 100
+endshape

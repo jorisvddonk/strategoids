@@ -1,0 +1,1 @@
+See the 'header' of the situation.txt file for more info regarding the situation.txt file format, as the file format has yet to be finalized.

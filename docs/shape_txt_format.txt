@@ -1,0 +1,1 @@
+See the 'header' of the shape.txt file for more info regarding the shape.txt file format, as the file format has yet to be finalized.

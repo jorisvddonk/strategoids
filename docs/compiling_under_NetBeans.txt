@@ -1,0 +1,15 @@
+1) Install NetBeans (I've been using 6.7.1, but 6.8 or 6.9beta should work too)
+2) Install the NetBeans OpenGL Pack (http://kenai.com/projects/netbeans-opengl-pack/pages/Home)
+3) Restart NetBeans (just to make sure)
+4) In NetBeans: File -> New Project. Choose a "JOGL Application" project.
+   Name it whatever you want, but do *NOT* place it in a folder that's being versioned by the Strategoids SVN repository.
+   Hit "finish" and test if you can run the Sample JOGL Application (it should show a triangle and a square).
+5) In NetBeans: Right-click on the "Strategoids" project, go to "properties".
+   Under "Source Package Folders" on the right, select "src" and hit Remove.
+   Hit "Add Folder" and point it to the "trunk\Strategoids\src" folder in the Strategoids SVN repository.
+   Hit OK
+6) In NetBeans: Right-click on the "Strategoids" project, go to "properties" again.
+   Click on "Run" on the left-part 'tree' of the screen that appears.
+   Click on the "Browse" button beside "Main Class", and select "strategoids.Strategoids" in the window that appears.
+7) Hit run, watch the thing compile and (hopefully) run! :)
+8) Celebrate 
