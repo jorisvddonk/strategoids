@@ -15,6 +15,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GLCanvas;
 import strategoids.Main;
 import strategoids.drawing.DrawShape;
+import strategoids.drawing.Line;
 import strategoids.drawing.Point;
 import strategoids.drawing.PointText;
 import strategoids.ships.AI.Order;
@@ -75,8 +76,8 @@ public class GUIToolkitContainer extends MouseAdapter {
 
     public void recreateButtons() {
         GUIButtons.clear();
-        GUIButtons.add(new GUIButton(topright.x, topright.y, topright.x - 30, topright.y - 20, "Return"));
-        GUIButtons.add(new GUIButton(topleft.x, topleft.y, topleft.x + 50, topleft.y - 10, "Button!"));
+        GUIButtons.add(new GUIButton(topright.x, topright.y, topright.x - 30, topright.y - 10, "Return"));
+        GUIButtons.add(new GUIButton(topright.x, topright.y - 10, topright.x - 30, topright.y - 20, "Shipnames"));
         GUIButtons.get(0).setButtonAction(foobuttonaction);
         GUIButtons.get(1).setButtonAction(buttonbuttonaction);
 
@@ -154,6 +155,12 @@ public class GUIToolkitContainer extends MouseAdapter {
             GUILabel.Render(gl, textrenderer, "q - fighter", 0, -3, 0.05, 1, 1, 1, 1);
             GUILabel.Render(gl, textrenderer, "w - frigate", 0, -6, 0.05, 1, 1, 1, 1);
             GUILabel.Render(gl, textrenderer, "e - missile carrier", 0, -9, 0.05, 1, 1, 1, 1);
+        }
+
+        int objectives_y = 2;
+        for (String s : Main.strategoids.game.tutorial_objectives.getUnmetObjectives()) {
+            GUILabel.Render(gl, textrenderer, s, topleft.x, topleft.y - objectives_y, 0.05, 1,1,1,1);
+            objectives_y += 2;
         }
 
         for (GUILabel guil : Labels_Shipnames) {
@@ -244,12 +251,12 @@ public class GUIToolkitContainer extends MouseAdapter {
                         gl.glVertex2d(iopt.x, iopt.y);
                     }
                     gl.glEnd();
-                    /*if (firstPersistentOrder != null) { //TODO, BUG
-                    ipt = Fortress.gameToGUI(firstPersistentOrder.getTargetPosition().x, firstPersistentOrder.getTargetPosition().y);
-                    System.out.println(ipt + "         " + iopt);
+                    if (firstPersistentOrder != null) { //TODO, BUG
+                    ipt = Main.strategoids.gameToGUI(firstPersistentOrder.getTargetPosition().x, firstPersistentOrder.getTargetPosition().y);
+                    //System.out.println(ipt + "         " + iopt);
                     gl.glLoadIdentity();
                     Line.draw(gl, ipt.x, ipt.y, iopt.x, iopt.y, (firstPersistentOrder.ordertype == Order.OrderType.attack || firstPersistentOrder.ordertype == Order.OrderType.attackmove ? 1 : 0), (firstPersistentOrder.ordertype == Order.OrderType.attack ? 0 : 1), (firstPersistentOrder.ordertype == Order.OrderType.attackmove ? 1 : 0), 0.4); //Order line for last persistent item (in case a loop exists)
-                    }*/
+                    }
 
                     /*for (Order iO : i.getOrders()) {
                     if (iO != null) {
@@ -383,6 +390,7 @@ public class GUIToolkitContainer extends MouseAdapter {
             boolean orderMade = false;
 
             if (e.isShiftDown()) { //want to queue up; check if we're trying to craft a patrol TODO: CHECK IF THERE IS BUG HERE (POSSIBLEBUG) regarding adding order to queue
+                Main.strategoids.game.checkTutorial_b("unit_queue");
                 for (int ordi = 0; ordi < i.getOrders().size(); ordi++) {
                     Order o = i.getOrders().get(ordi);
                     if (o.getOrderType() != Order.OrderType.attack) {
@@ -391,6 +399,7 @@ public class GUIToolkitContainer extends MouseAdapter {
                                 i.getOrders().get(ordi2).persistent = true;
                                 //System.out.println("Persistency: " + i + " - " + ordi2);
                                 orderMade = true;
+                                Main.strategoids.game.checkTutorial_b("unit_patrol");
                             }
                         }
                     }
@@ -402,6 +411,7 @@ public class GUIToolkitContainer extends MouseAdapter {
                     i.orders_clear();
                 }
                 if (order.target == null || !order.target.isShip()) { //target is a point in space
+                    Main.strategoids.game.checkTutorial_b("unit_move");
                     if (e.isControlDown()) {
                         order.ordertype = Order.OrderType.attackmove;
                         order.target = new OrderTarget(gamept.x, gamept.y);
@@ -410,6 +420,7 @@ public class GUIToolkitContainer extends MouseAdapter {
                         order.target = new OrderTarget(gamept.x, gamept.y);
                     }
                 } else { //ship targeted
+                    Main.strategoids.game.checkTutorial_b("unit_attack");
                     System.out.println("Ship targeted: " + order.target.targetship.getPointText().text + " " + order.target.getX() + " " + order.target.getY());
                     //System.out.println("Enemies? " + Fortress.ships_areEnemies(i, ot.targetship));
                     if (e.isControlDown()) { //control down

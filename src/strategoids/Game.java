@@ -71,6 +71,10 @@ public class Game {
         asteroids.add(new strategoids.objects.Asteroid());
         tutorial_objectives = new Objectives();
         tutorial_objectives.addObjective("unit_selected","Select a unit with the left mouse button");
+        tutorial_objectives.addObjective("unit_move","Order a unit to move by rightclicking on empty space");
+        tutorial_objectives.addObjective("unit_attack","Order a unit to attack an enemy by rightclicking on an enemy ship");
+        tutorial_objectives.addObjective("unit_queue","Queue up an order for a unit by holding shift whilst giving it an order");
+        tutorial_objectives.addObjective("unit_patrol","Order a unit to patrol by creating a 'loop' out of queued move orders");
         for (String s : tutorial_objectives.getUnmetObjectives()) {
             System.out.println("Objective: " + s);
         }
